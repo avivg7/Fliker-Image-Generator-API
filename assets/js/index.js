@@ -7,23 +7,22 @@ async function main() {
     // The url address of the API
     const API_URL = `https://api.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=c4e2f731926eefa6fe1d3e9c2c9f9449&privacy_filter=1&per_page=15&page=2&format=json&nojsoncallback=1`;
 
-    // Take all the tags that thier id is 'photos-table' and represent them as an object inside table
+    // Take the tags <table></table> that thier id is 'photos-table' and represent them as an object inside table
     const table = document.getElementById('photos-table');
 
-    // Take  the tags <tbody></tbody> and represent them as an object inside tbody
+    // Take the tags <tbody></tbody> and represent them as an object inside tbody
     const tbody = table.querySelector(`tbody`);
 
     try {
 
-        /**
-         * await expression can be used only on async function, we use it on fetch because we dont want to run to the next command
-         * before the server will return the response, await expression say: "Until I finish my business everyone will wait",
-         * if we will run to the next command befor the server will have the chance to return the "Promise" fetch_photos will still be empty
-         * and "fetch_photos.photos" will throw us to the catch and error will be thrown.
-         * fetch get the API url address and return "Promise" that contain the response, from the Promise we use the method then, 
-         * before return the response be then we created a function that return the response in jason form to then, then will return
-         * the jason in form of an object and put it inside fetch_photos.
-         */
+
+        // await expression can be used only on async function, we use it on fetch because we dont want to run to the 
+        // next command before the server will return the response, await expression say: "Until I finish my business // everyone will wait", if we will run to the next command befor the server will have the chance to return
+        // the "Promise" fetch_photos will still be empty and "fetch_photos.photos" will throw us to the catch and
+        // error will be thrown. fetch get the API url address and return "Promise" that contain the response, 
+        // from the Promise we use the method then, before return the response be then we created a function that
+        // return the response in jason form to then, then will return the jason in form of an object and put it
+        // inside fetch_photos.
         const fetch_photos = await fetch(API_URL)
             .then(function (response) {
                 return response.json()
@@ -43,8 +42,8 @@ async function main() {
 
 
             /**
-             * @param - Get an an Object that contain the photos details
-             * @returns - Table row that contains all the photo paramenters and the photo 
+             * Get an Object that contain the photos details
+             * returns String table row that contains all the photo paramenters and the photo 
              */
             function getTrHTML(photo) {
                 return `
@@ -77,10 +76,10 @@ async function main() {
         console.error(e)
     }
 
-    // Take all the tags that thier id is 'search-form' and represent them as an object inside searchForm 
+    // Take the tags that thier id is 'search-form' and represent them as an object inside searchForm 
     const searchForm = document.getElementById('search-form');
 
-    // Take all the tags inside the objects search form that thier type is 'search' and represent them as an 
+    // Take the tags inside the objects search form that thier type is 'search' and represent them as an 
     // object inside input (that is the <input> tag)
     const input = searchForm.querySelector('[type="search"]');
 
@@ -90,16 +89,16 @@ async function main() {
         return e.preventDefault()
     });
 
-    // Take all the <tr> tags inside tbody and represent them as an object inside searchForm 
+    // Take the <tr> tags inside tbody and represent them as an array of objects inside searchForm 
     const tbodyAllTr = Array.from(tbody.querySelectorAll('tr'));
 
-    /**
-    * We add an event to the <input> tag, when we release the key after entering the input a new object called value is created, 
-    * if the length of value is 3 or more then we enter the block, add to every row in the table an attribute that makes hem disappear
-    * then check which row contains an object with a title that contains the user's input and removefrom hem the attribute that he could be 
-    * seen, after the user delete the input from the search bar we will remove the reset of the attributes from the rows and they will 
-    * return to be seen
-    */
+
+    // We add an event to the <input> tag, when we release the key after entering the input a new object 
+    // called value is created, if the length of value is 3 or more then we enter the block, add to
+    // every row in the table an attribute that  makes hem disappear then check which row contains
+    // an object with a title that contains the user's input and removefrom hem the attribute that
+    // he could be seen, after the user delete the input from the search bar we will remove the
+    // reset of the attributes from the rows and they willreturn to be seen.
     input.addEventListener('keyup', function (e) {
 
         const value = this.value.toLowerCase().trim();
@@ -110,7 +109,7 @@ async function main() {
                 tr.style.display = 'none'
             });
 
-            // find the titles that contain the user's input
+            // Find the titles that contain the user's input
             const trDisplay = tbodyAllTr.filter(function (tr) {
                 return tr.querySelector(`.title`).innerText.toLowerCase().trim().includes(value)
             });
@@ -127,22 +126,5 @@ async function main() {
     });
 }
 
+// Run the program
 main();
-
-
-/*var liveServer = require("live-server");
-
-var params = {
-    port: 8080, // Set the server port. Defaults to 8080.
-    host: "127.0.0.1", // Set the address to bind to. Defaults to 0.0.0.0 or process.env.IP.
-    root: "./public", // Set root directory that's being served. Defaults to cwd.
-    open: true, // When false, it won't load your browser by default.
-    //ignore: 'scss,my/templates', // comma-separated string for paths to ignore
-    file: "index.html", // When set, serve this file (server root relative) for every 404 (useful for single-page applications)
-    wait: 1000, // Waits for all changes, before reloading. Defaults to 0 sec.
-    mount: [['/components', './node_modules']], // Mount a directory to a route.
-    logLevel: 2, // 0 = errors only, 1 = some, 2 = lots
-    middleware: [function(req, res, next) { next(); }] // Takes an array of Connect-compatible middleware that are injected into the server middleware stack
-};
-liveServer.start(params);
-*/
