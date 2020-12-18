@@ -17,7 +17,8 @@ async function main() {
 
 
         // await expression can be used only on async function, we use it on fetch because we dont want to run to the 
-        // next command before the server will return the response, await expression say: "Until I finish my business // everyone will wait", if we will run to the next command befor the server will have the chance to return
+        // next command before the server will return the response, await expression say: "Until I finish my business 
+        // everyone will wait", if we will run to the next command befor the server will have the chance to return
         // the "Promise" fetch_photos will still be empty and "fetch_photos.photos" will throw us to the catch and
         // error will be thrown. fetch get the API url address and return "Promise" that contain the response, 
         // from the Promise we use the method then, before return the response be then we created a function that
